@@ -1,0 +1,68 @@
+---
+title: "beauty-income"
+author: "me"
+date: "01/08/2022"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+library(lme4)
+```
+
+```{r}
+df <- read.csv("../data/processed/all_data-no-adj.csv")
+
+min_im_size <- 224
+
+df <- df %>% 
+  mutate(Remuneration = as.numeric(gsub("[^\\d\\.]", "", Remuneration, perl = TRUE))) %>% 
+  filter(im_size >= min_im_size)
+```
+
+```{r}
+# df <- rbind(df, df, df, df)
+summary(df)
+table(df$Sector)
+df %>% ggplot(aes(x=beauty_score, y=Remuneration, col=Sector)) +
+  geom_point()
+```
+
+```{r}
+lm(Remuneration ~ beauty_score, data = df) %>% summary()
+```
+
+```{r}
+lmer(Remuneration ~ beauty_score + (1 | Sector), data = df) %>% summary()
+lm(Remuneration ~ beauty_score + beauty_score:Sector, data = df) %>% summary()
+```
+
+```{r}
+df2$Sector %>% unique
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

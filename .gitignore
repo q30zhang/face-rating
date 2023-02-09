@@ -1,0 +1,10 @@
+.DS_Store
+.ipynb_checkpoints/
+data/img_raw/
+data/img_processed/
+models/
+results/
+*.npz
+*.jpg
+*.jpeg
+*.png
